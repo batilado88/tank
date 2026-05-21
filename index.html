@@ -29,10 +29,12 @@
     width: min(100%, 1060px);
     display: grid;
     grid-template-columns: 1fr;
+    justify-items: center;
   }
 
   .game-card {
     position: relative;
+    width: min(100%, 920px, calc((100vh - 110px) * 24 / 19));
     background: rgba(27, 33, 29, 0.88);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 18px;
@@ -140,7 +142,9 @@
 
   @media (max-width: 700px) {
     body { padding: 8px; }
-    .topbar { align-items: flex-start; }
+    .game-card { width: min(100%, calc((100vh - 96px) * 24 / 19)); }
+    .topbar { align-items: flex-start; gap: 8px; padding: 10px; }
+    h1 { font-size: 17px; }
     button { padding: 8px 10px; }
   }
 </style>
