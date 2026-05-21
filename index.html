@@ -1,183 +1,183 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Tanktiks-like Browser Prototype</title>
-  <style>
-    :root {
-      --bg: #111513;
-      --panel: #1b211d;
-      --ink: #e9f2e8;
-      --muted: #9fb09d;
-      --grass: #314c31;
-      --wall: #8d7b5c;
-      --brick: #9a503b;
-      --water: #2c5f88;
-      --red: #d64a3a;
-      --blue: #4289d8;
-      --yellow: #f4c84b;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Tank You!</title>
+<style>
+  :root {
+    --bg: #111513;
+    --panel: #1b211d;
+    --ink: #e9f2e8;
+    --muted: #9fb09d;
+  }
 
-    * { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #26352a 0%, var(--bg) 55%);
-      color: var(--ink);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-    }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #26352a 0%, var(--bg) 55%);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+  }
 
-    .wrap {
-      width: min(100%, 980px);
-      display: grid;
-      grid-template-columns: 1fr 270px;
-      gap: 16px;
-      align-items: start;
-    }
+  .wrap {
+    width: min(100%, 1060px);
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 
-    .game-card, .side {
-      background: rgba(27, 33, 29, 0.88);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      box-shadow: 0 24px 70px rgba(0,0,0,0.35);
-      overflow: hidden;
-    }
+  .game-card {
+    position: relative;
+    background: rgba(27, 33, 29, 0.88);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+    overflow: hidden;
+  }
 
-    .game-card:fullscreen {
-      width: 100vw;
-      height: 100vh;
-      border-radius: 0;
-      display: grid;
-      grid-template-rows: auto 1fr;
-      background: #111513;
-    }
+  .game-card:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: #111513;
+  }
 
-    .game-card:fullscreen canvas {
-      width: 100vw;
-      height: calc(100vh - 64px);
-      aspect-ratio: auto;
-      object-fit: contain;
-    }
+  .game-card:fullscreen canvas {
+    width: 100vw;
+    height: calc(100vh - 70px);
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(27, 33, 29, 0.98);
+  }
 
-    h1 {
-      margin: 0;
-      font-size: 18px;
-      letter-spacing: 0.3px;
-    }
+  h1 {
+    margin: 0;
+    font-size: 19px;
+    letter-spacing: 0.3px;
+  }
 
-    .badge {
-      font-size: 12px;
-      color: var(--muted);
-    }
+  .badge {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.35;
+  }
 
-    canvas {
-      display: block;
-      width: 100%;
-      aspect-ratio: 24 / 19;
-      image-rendering: pixelated;
-      background: var(--grass);
-      touch-action: none;
-    }
+  .row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 
-    .side { padding: 16px; }
-    .side h2 { margin: 0 0 10px; font-size: 16px; }
-    .side p, .side li { color: var(--muted); font-size: 14px; line-height: 1.45; }
-    .side ul { padding-left: 18px; margin-top: 6px; }
+  button {
+    border: 1px solid rgba(255,255,255,0.12);
+    background: #26302a;
+    color: var(--ink);
+    border-radius: 11px;
+    padding: 10px 12px;
+    font: inherit;
+    cursor: pointer;
+  }
 
-    button, select {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: #26302a;
-      color: var(--ink);
-      border-radius: 11px;
-      padding: 10px 12px;
-      font: inherit;
-    }
+  button:hover { background: #303b34; }
 
-    button { cursor: pointer; }
-    button:hover { background: #303b34; }
-    select { display: none; }
+  canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 24 / 19;
+    image-rendering: pixelated;
+    background: #314c31;
+    touch-action: none;
+  }
 
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(3, 54px);
-      gap: 8px;
-      justify-content: center;
-      margin-top: 14px;
-      user-select: none;
-    }
+  .menu-overlay {
+    position: absolute;
+    inset: 70px 0 0;
+    display: grid;
+    place-items: center;
+    background: rgba(8, 12, 10, 0.72);
+    backdrop-filter: blur(3px);
+    z-index: 5;
+  }
 
-    .controls button {
-      height: 50px;
-      font-size: 18px;
-      padding: 0;
-    }
+  .menu-overlay.hidden { display: none; }
 
-    .controls .empty { visibility: hidden; }
-    .fire { grid-column: 1 / 4; width: 100%; }
+  .menu-box {
+    width: min(92%, 430px);
+    padding: 24px;
+    border-radius: 22px;
+    background: rgba(27, 33, 29, 0.96);
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 22px 80px rgba(0,0,0,0.45);
+    text-align: center;
+  }
 
-    .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
-    .stat { font-size: 13px; color: var(--muted); white-space: pre-line; }
+  .menu-box h2 { margin: 0 0 8px; font-size: 31px; }
+  .menu-box p { margin: 0 0 18px; color: var(--muted); line-height: 1.45; white-space: pre-line; }
+  .rounds { display: flex; justify-content: center; gap: 10px; margin: 14px 0 18px; color: var(--muted); font-size: 14px; }
+  .round-pill { border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; padding: 5px 10px; background: rgba(255,255,255,0.04); }
+  .menu-actions { display: grid; gap: 10px; }
+  .menu-actions button { font-weight: 700; }
+  .hidden { display: none !important; }
 
-    @media (max-width: 820px) {
-      body { padding: 10px; }
-      .wrap { grid-template-columns: 1fr; }
-      .side { order: 2; }
-    }
-  </style>
+  @media (max-width: 700px) {
+    body { padding: 8px; }
+    .topbar { align-items: flex-start; }
+    button { padding: 8px 10px; }
+  }
+</style>
 </head>
 <body>
   <div class="wrap">
     <section class="game-card">
       <div class="topbar">
         <div>
-          <h1>Tanktiks-like Prototype</h1>
-          <div class="badge" id="status">Одна карта: базы, респавны, 3 появления</div>
+          <h1>Tank You!</h1>
+          <div class="badge" id="status">Меню</div>
+          <div class="badge" id="score">Раунды 0:0 · Танки: синие 0 · красные 0</div>
         </div>
         <div class="row">
-          <select id="mapSelect" title="Карта"></select>
           <button id="fullscreen">Fullscreen</button>
           <button id="restart">Restart</button>
         </div>
       </div>
+
       <canvas id="game" width="960" height="760"></canvas>
-    </section>
 
-    <aside class="side">
-      <h2>Управление</h2>
-      <ul>
-        <li><b>Игрок:</b> стрелки, выстрел Ctrl / Space</li>
-        <li><b>Второй стиль:</b> WASD, выстрел `</li>
-        <li><b>Мобилка:</b> кнопки ниже</li>
-      </ul>
-
-      <div class="stat" id="score"></div>
-
-      <div class="controls" aria-label="mobile controls">
-        <button class="empty">.</button>
-        <button data-hold="up">▲</button>
-        <button class="empty">.</button>
-        <button data-hold="left">◀</button>
-        <button data-hold="down">▼</button>
-        <button data-hold="right">▶</button>
-        <button class="fire" data-fire="1">FIRE</button>
+      <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-box">
+          <h2 id="menuTitle">Tank You!</h2>
+          <p id="menuText">Игра до 5 побед</p>
+          <div class="rounds">
+            <span class="round-pill" id="blueRoundPill">Синие: 0</span>
+            <span class="round-pill" id="redRoundPill">Красные: 0</span>
+          </div>
+          <div class="menu-actions">
+            <button id="startGame">Старт</button>
+            <button id="nextRound" class="hidden">Следующий раунд</button>
+            <button id="newMatch" class="hidden">Новый матч</button>
+          </div>
+        </div>
       </div>
-
-      <p>Сейчас фокус на базовой динамике: одна карта, равные составы, личные респавны, прикрытые флаги, ограниченный запас появлений.</p>
-    </aside>
+    </section>
   </div>
 
 <script>
@@ -185,54 +185,68 @@
   const TILE = 40;
   const COLS = 24;
   const ROWS = 19;
-  const TEAM_SIZE = 5;          // с учётом игрока: игрок + 4 синих бота против 5 красных ботов
-  const MAX_LIVES = 3;          // каждый танк может появиться 3 раза
-  const RESPAWN_DELAY = 1.2;    // секунд до появления после уничтожения
-  const SPAWN_PROTECTION = 1.0; // краткая защита после респавна
+  const TEAM_SIZE = 5;
+  const FAST_PER_TEAM = 3;
+  const MAX_LIVES = 3;
+  const ROUNDS_TO_WIN = 5;
+  const RESPAWN_DELAY = 1.2;
+  const PLAYER_RESPAWN_DELAY = 1.0;
+  const SPAWN_PROTECTION = 1.0;
+  const POWERUP_SPAWN_EVERY = 7;
+  const MAX_POWERUPS = 4;
+
+  const TANK_TYPES = {
+    fast: { hp: 1, radius: 15, speedHuman: 130, speedBot: 86, cooldownHuman: 0.28, cooldownBot: 0.76, bulletSpeed: 340 },
+    heavy: { hp: 2, radius: 18, speedHuman: 94, speedBot: 56, cooldownHuman: 0.42, cooldownBot: 1.02, bulletSpeed: 300 }
+  };
+
+  const POWERUPS = [
+    { kind: 'speed', label: 'Speed', icon: '⚡' },
+    { kind: 'rapid', label: 'Rapid', icon: '»' },
+    { kind: 'armor', label: 'Armor', icon: '+' },
+    { kind: 'shield', label: 'Shield', icon: '◆' },
+    { kind: 'freeze', label: 'Freeze', icon: '❄' },
+    { kind: 'repair', label: 'Repair', icon: '✚' }
+  ];
+
+  const DIRS = [
+    { angle: 0, dx: 1, dy: 0 },
+    { angle: Math.PI / 2, dx: 0, dy: 1 },
+    { angle: Math.PI, dx: -1, dy: 0 },
+    { angle: -Math.PI / 2, dx: 0, dy: -1 }
+  ];
+
+  const MAP = [
+    '########################',
+    '#..........##..........#',
+    '#r.........##.........b#',
+    '#..r.......##.......b..#',
+    '#..xxxx..........xxxx..#',
+    '#........xx....xx......#',
+    '#..xxxx..xx....xx..xxxx#',
+    '#..x###..xx....xx..###x#',
+    '#........XXXXXX........#',
+    '#r.RXX...X~~~~X...XXB.b#',
+    '#........XXXXXX........#',
+    '#..x###..xx....xx..###x#',
+    '#..xxxx..xx....xx..xxxx#',
+    '#........xx....xx......#',
+    '#..xxxx..........xxxx..#',
+    '#..r.......##.......b..#',
+    '#r.........##.........b#',
+    '#..........##..........#',
+    '########################'
+  ];
 
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const statusEl = document.getElementById('status');
   const scoreEl = document.getElementById('score');
-  const mapSelect = document.getElementById('mapSelect');
-
-  // Одна эталонная карта. Обозначения:
-  // # — каменная стена, x — обычный кирпич 1 HP, X — усиленный кирпич 3 HP, ~ — вода
-  // R/B — флаги, r/b — респавны красных/синих
-  const maps = [
-    {
-      name: 'Prototype Base Map',
-      rows: [
-        '########################',
-        '#..........##..........#',
-        '#......................#',
-        '#.r........##........b.#',
-        '#..xxxx..........xxxx..#',
-        '#.....r....##....b.....#',
-        '#..xxxx..xx....xx..xxxx#',
-        '#..x###..xx....xx..###x#',
-        '#........XXXXXX........#',
-        '#..RrX...X~~~~X...XbB..#',
-        '#........XXXXXX........#',
-        '#..x###..xx....xx..###x#',
-        '#..xxxx..xx....xx..xxxx#',
-        '#.....r....##....b.....#',
-        '#..xxxx..........xxxx..#',
-        '#.r........##........b.#',
-        '#......................#',
-        '#..........##..........#',
-        '########################'
-      ],
-      playerSpawnIndex: 0
-    }
-  ];
-
-  for (let i = 0; i < maps.length; i++) {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = maps[i].name;
-    mapSelect.appendChild(opt);
-  }
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuTitle = document.getElementById('menuTitle');
+  const menuText = document.getElementById('menuText');
+  const blueRoundPill = document.getElementById('blueRoundPill');
+  const redRoundPill = document.getElementById('redRoundPill');
 
   const input = { up:false, down:false, left:false, right:false, fire:false };
   const keyMap = {
@@ -240,204 +254,58 @@
     KeyW:'up', KeyS:'down', KeyA:'left', KeyD:'right'
   };
 
+  let grid = null;
+  let brickHp = new Map();
+  let player = null;
+  let allTanks = [];
+  let bots = [];
+  let bullets = [];
+  let particles = [];
+  let flags = [];
+  let powerups = [];
+  let spawnPoints = { red: [], blue: [] };
+  let teamFreeze = { red: 0, blue: 0 };
+  let gameState = 'menu';
+  let roundScore = { blue: 0, red: 0 };
+  let roundNumber = 1;
+  let playerCarry = { speedLevel: 0, rapidLevel: 0, bonusArmor: 0 };
+  let fireLatch = false;
+  let gameTime = 0;
+  let lastTime = 0;
+  let powerupTimer = 0;
+  let audioCtx;
+
   addEventListener('keydown', e => {
     if (keyMap[e.code]) { input[keyMap[e.code]] = true; e.preventDefault(); }
-    if (e.code === 'ControlLeft' || e.code === 'ControlRight' || e.code === 'Space' || e.code === 'Backquote') {
+    if (['ControlLeft','ControlRight','Space','Backquote'].includes(e.code)) {
       input.fire = true; e.preventDefault();
     }
   });
+
   addEventListener('keyup', e => {
     if (keyMap[e.code]) { input[keyMap[e.code]] = false; e.preventDefault(); }
-    if (e.code === 'ControlLeft' || e.code === 'ControlRight' || e.code === 'Space' || e.code === 'Backquote') {
+    if (['ControlLeft','ControlRight','Space','Backquote'].includes(e.code)) {
       input.fire = false; e.preventDefault();
     }
   });
 
-  document.querySelectorAll('[data-hold]').forEach(btn => {
-    const dir = btn.dataset.hold;
-    const on = e => { e.preventDefault(); input[dir] = true; };
-    const off = e => { e.preventDefault(); input[dir] = false; };
-    btn.addEventListener('pointerdown', on);
-    btn.addEventListener('pointerup', off);
-    btn.addEventListener('pointercancel', off);
-    btn.addEventListener('pointerleave', off);
+  document.getElementById('fullscreen').addEventListener('click', async () => {
+    const card = document.querySelector('.game-card');
+    try {
+      if (!document.fullscreenElement) await card.requestFullscreen();
+      else await document.exitFullscreen();
+    } catch {}
   });
-  document.querySelector('[data-fire]').addEventListener('pointerdown', e => { e.preventDefault(); input.fire = true; });
-  document.querySelector('[data-fire]').addEventListener('pointerup', e => { e.preventDefault(); input.fire = false; });
 
-  let grid, brickHp, player, enemies, allTanks, bullets, particles, flags, winner, lastTime, fireLatch, gameTime, currentMap, spawnPoints;
+  document.getElementById('restart').addEventListener('click', () => {
+    if (gameState === 'playing') startRound();
+    else startNewMatch();
+  });
 
-  function loadMap(index = 0) {
-    currentMap = maps[index];
-    const src = currentMap.rows.map(r => r.padEnd(COLS, '#').slice(0, COLS));
-    grid = src.map(r => r.split(''));
-    brickHp = new Map();
-    enemies = [];
-    allTanks = [];
-    bullets = [];
-    particles = [];
-    flags = [];
-    spawnPoints = { red: [], blue: [] };
-    winner = '';
-    fireLatch = false;
-    gameTime = 0;
+  document.getElementById('startGame').addEventListener('click', startNewMatch);
+  document.getElementById('nextRound').addEventListener('click', startRound);
+  document.getElementById('newMatch').addEventListener('click', startNewMatch);
 
-    for (let y = 0; y < ROWS; y++) {
-      for (let x = 0; x < COLS; x++) {
-        const c = grid[y][x];
-        if (c === 'R') { flags.push({ x, y, team: 'red', alive: true, hp: 3 }); grid[y][x] = '.'; }
-        if (c === 'B') { flags.push({ x, y, team: 'blue', alive: true, hp: 3 }); grid[y][x] = '.'; }
-        if (c === 'r') { spawnPoints.red.push({ x, y }); grid[y][x] = '.'; }
-        if (c === 'b') { spawnPoints.blue.push({ x, y }); grid[y][x] = '.'; }
-        if (c === 'X') brickHp.set(`${x},${y}`, 3);
-      }
-    }
-
-    ensureSpawnPoints();
-
-    const playerSpawnIndex = currentMap.playerSpawnIndex || 0;
-    const playerSpawn = spawnPoints.blue[playerSpawnIndex];
-    player = makeTank(playerSpawn.x, playerSpawn.y, 'blue', true, playerSpawnIndex);
-    player.dir = Math.PI;
-    allTanks.push(player);
-
-    for (let i = 1; i < TEAM_SIZE; i++) {
-      const sp = spawnPoints.blue[i % spawnPoints.blue.length];
-      const bot = makeTank(sp.x, sp.y, 'blue', false, i);
-      bot.dir = Math.PI;
-      enemies.push(bot);
-      allTanks.push(bot);
-    }
-
-    for (let i = 0; i < TEAM_SIZE; i++) {
-      const sp = spawnPoints.red[i % spawnPoints.red.length];
-      const bot = makeTank(sp.x, sp.y, 'red', false, i);
-      bot.dir = 0;
-      enemies.push(bot);
-      allTanks.push(bot);
-    }
-
-    statusEl.textContent = 'Одна карта. У каждого танка свой респавн. Флаги прикрыты с внешней стороны.';
-  }
-
-  function ensureSpawnPoints() {
-    if (spawnPoints.red.length === 0) spawnPoints.red = [{x:2,y:2},{x:5,y:3},{x:5,y:8},{x:5,y:14}];
-    if (spawnPoints.blue.length === 0) spawnPoints.blue = [{x:21,y:2},{x:18,y:3},{x:18,y:8},{x:18,y:14}];
-
-    // Ровно один личный респавн на каждый танк команды.
-    spawnPoints.red = normalizeSpawnCount(spawnPoints.red, 'red');
-    spawnPoints.blue = normalizeSpawnCount(spawnPoints.blue, 'blue');
-  }
-
-  function normalizeSpawnCount(points, team) {
-    const fallback = team === 'red'
-      ? [{x:2,y:2},{x:5,y:3},{x:3,y:4},{x:5,y:8},{x:3,y:13},{x:5,y:14},{x:2,y:15}]
-      : [{x:21,y:2},{x:18,y:3},{x:20,y:4},{x:18,y:8},{x:20,y:13},{x:18,y:14},{x:21,y:15}];
-    const result = [...points];
-    for (const p of fallback) {
-      if (result.length >= TEAM_SIZE) break;
-      if (!result.some(q => q.x === p.x && q.y === p.y)) result.push(p);
-    }
-    return result.slice(0, TEAM_SIZE);
-  }
-
-  function makeTank(tx, ty, color, human, spawnIndex) {
-    return {
-      spawnIndex,
-      x: tx * TILE + TILE / 2,
-      y: ty * TILE + TILE / 2,
-      dir: color === 'red' ? 0 : Math.PI,
-      color,
-      human,
-      radius: 15,
-      speed: human ? 130 : 82,
-      cooldown: human ? 0 : 1.0 + Math.random() * 0.7,
-      aiTimer: 0.55 + Math.random() * 1.4,
-      alive: true,
-      livesLeft: MAX_LIVES,
-      respawnTimer: 0,
-      invulnTimer: SPAWN_PROTECTION
-    };
-  }
-
-  function flagAtPixel(px, py) {
-    const tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
-    return flags.find(f => f.alive && f.x === tx && f.y === ty);
-  }
-
-  function solidAtPixel(px, py, forBullet=false) {
-    const tx = Math.floor(px / TILE), ty = Math.floor(py / TILE);
-    if (tx < 0 || ty < 0 || tx >= COLS || ty >= ROWS) return '#';
-    const t = grid[ty][tx];
-    if (t === '#') return t;
-    if (t === 'x' || t === 'X') return t;
-    if (t === '~' && !forBullet) return t;
-    if (!forBullet && flagAtPixel(px, py)) return 'flag';
-    return '';
-  }
-
-  function canMoveTo(tank, nx, ny) {
-    const r = tank.radius;
-    const points = [[nx-r,ny-r],[nx+r,ny-r],[nx-r,ny+r],[nx+r,ny+r],[nx,ny]];
-    if (!points.every(([px,py]) => !solidAtPixel(px, py, false))) return false;
-
-    // Танки не могут проезжать друг через друга.
-    for (const other of allTanks) {
-      if (!other.alive || other === tank) continue;
-      const minDist = tank.radius + other.radius + 2;
-      if (Math.hypot(other.x - nx, other.y - ny) < minDist) return false;
-    }
-    return true;
-  }
-
-  function spawnPixel(team, spawnIndex) {
-    const list = spawnPoints[team];
-    const sp = list[spawnIndex % list.length];
-    return { x: sp.x * TILE + TILE / 2, y: sp.y * TILE + TILE / 2 };
-  }
-
-  function respawnTank(tank) {
-    if (tank.livesLeft <= 0) return;
-    const p = spawnPixel(tank.color, tank.spawnIndex);
-    tank.x = p.x;
-    tank.y = p.y;
-    tank.dir = tank.color === 'red' ? 0 : Math.PI;
-    tank.alive = true;
-    tank.cooldown = tank.human ? 0.18 : 0.9 + Math.random() * 0.5;
-    tank.aiTimer = 0.35 + Math.random() * 0.6;
-    tank.invulnTimer = SPAWN_PROTECTION;
-    boom(tank.x, tank.y, 10);
-  }
-
-  function destroyTank(tank) {
-    if (!tank.alive) return;
-    tank.alive = false;
-    tank.livesLeft -= 1;
-    tank.respawnTimer = tank.livesLeft > 0 ? RESPAWN_DELAY : 0;
-    boom(tank.x, tank.y, 18);
-    statusEl.textContent = tank.human
-      ? `Тебя подбили. Осталось появлений: ${tank.livesLeft}`
-      : `${tank.color === 'red' ? 'Красный' : 'Синий'} танк подбит. Осталось появлений: ${tank.livesLeft}`;
-  }
-
-  function shoot(tank) {
-    if (!tank.alive || tank.cooldown > 0) return;
-    tank.cooldown = tank.human ? 0.28 : 0.72;
-    const speed = 330;
-    bullets.push({
-      x: tank.x + Math.cos(tank.dir) * 17,
-      y: tank.y + Math.sin(tank.dir) * 17,
-      vx: Math.cos(tank.dir) * speed,
-      vy: Math.sin(tank.dir) * speed,
-      owner: tank,
-      team: tank.color,
-      life: 2.4,
-      color: tank.color
-    });
-    beep(tank.human ? 220 : 160, 0.035);
-  }
-
-  let audioCtx;
   function beep(freq, dur) {
     try {
       audioCtx ||= new (window.AudioContext || window.webkitAudioContext)();
@@ -451,30 +319,248 @@
     } catch {}
   }
 
+  function resetInput() {
+    input.up = input.down = input.left = input.right = input.fire = false;
+    fireLatch = false;
+  }
+
+  function showMenu(mode, title, text) {
+    gameState = mode;
+    menuTitle.textContent = title;
+    menuText.textContent = text;
+    menuOverlay.classList.remove('hidden');
+    document.getElementById('startGame').classList.toggle('hidden', mode !== 'menu');
+    document.getElementById('nextRound').classList.toggle('hidden', mode !== 'roundOver');
+    document.getElementById('newMatch').classList.toggle('hidden', mode !== 'matchOver');
+    updateRoundPills();
+  }
+
+  function hideMenu() {
+    menuOverlay.classList.add('hidden');
+  }
+
+  function updateRoundPills() {
+    blueRoundPill.textContent = `Синие: ${roundScore.blue}`;
+    redRoundPill.textContent = `Красные: ${roundScore.red}`;
+  }
+
+  function startNewMatch() {
+    roundScore = { blue: 0, red: 0 };
+    roundNumber = 1;
+    playerCarry = { speedLevel: 0, rapidLevel: 0, bonusArmor: 0 };
+    startRound();
+  }
+
+  function startRound() {
+    resetInput();
+    loadRound();
+    gameState = 'playing';
+    hideMenu();
+    statusEl.textContent = `Раунд ${roundNumber}. Счёт: синие ${roundScore.blue} — ${roundScore.red} красные`;
+    updateRoundPills();
+  }
+
+  function endRound(winner, reason) {
+    if (gameState !== 'playing') return;
+    if (winner === 'blue') roundScore.blue++;
+    if (winner === 'red') roundScore.red++;
+    updateRoundPills();
+
+    const matchOver = roundScore.blue >= ROUNDS_TO_WIN || roundScore.red >= ROUNDS_TO_WIN;
+    if (matchOver) {
+      const title = winner === 'blue' ? 'Матч выигран!' : 'Матч проигран';
+      showMenu('matchOver', title, `${reason}\nИтог: синие ${roundScore.blue} — ${roundScore.red} красные.`);
+      return;
+    }
+
+    roundNumber++;
+    showMenu('roundOver', winner === 'blue' ? 'Раунд выигран' : 'Раунд проигран', `${reason}\nСчёт: синие ${roundScore.blue} — ${roundScore.red} красные.`);
+  }
+
+  function loadRound() {
+    grid = MAP.map(row => row.split(''));
+    brickHp = new Map();
+    allTanks = [];
+    bots = [];
+    bullets = [];
+    particles = [];
+    flags = [];
+    powerups = [];
+    spawnPoints = { red: [], blue: [] };
+    teamFreeze = { red: 0, blue: 0 };
+    powerupTimer = 2.5;
+    gameTime = 0;
+
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) {
+        const c = grid[y][x];
+        if (c === 'R') { flags.push({ x, y, team: 'red', hp: 3, alive: true }); grid[y][x] = '.'; }
+        if (c === 'B') { flags.push({ x, y, team: 'blue', hp: 3, alive: true }); grid[y][x] = '.'; }
+        if (c === 'r') { spawnPoints.red.push({ x, y }); grid[y][x] = '.'; }
+        if (c === 'b') { spawnPoints.blue.push({ x, y }); grid[y][x] = '.'; }
+        if (c === 'X') brickHp.set(`${x},${y}`, 3);
+      }
+    }
+
+    normalizeSpawnPoints();
+
+    const pSpawn = spawnPoints.blue[0];
+    player = createTank(pSpawn.x, pSpawn.y, 'blue', true, 0, 'fast', 'attacker');
+    player.unlimitedRespawn = true;
+    applyPlayerCarry(player);
+    allTanks.push(player);
+
+    for (let i = 1; i < TEAM_SIZE; i++) {
+      const type = i < FAST_PER_TEAM ? 'fast' : 'heavy';
+      const role = type === 'heavy' ? 'guard' : 'attacker';
+      const s = spawnPoints.blue[i];
+      const bot = createTank(s.x, s.y, 'blue', false, i, type, role);
+      allTanks.push(bot);
+      bots.push(bot);
+    }
+
+    for (let i = 0; i < TEAM_SIZE; i++) {
+      const type = i < FAST_PER_TEAM ? 'fast' : 'heavy';
+      const role = type === 'heavy' ? 'guard' : 'attacker';
+      const s = spawnPoints.red[i];
+      const bot = createTank(s.x, s.y, 'red', false, i, type, role);
+      allTanks.push(bot);
+      bots.push(bot);
+    }
+  }
+
+  function normalizeSpawnPoints() {
+    const fallbackRed = [{x:1,y:2},{x:3,y:3},{x:1,y:9},{x:3,y:15},{x:1,y:16}];
+    const fallbackBlue = [{x:22,y:2},{x:20,y:3},{x:22,y:9},{x:20,y:15},{x:22,y:16}];
+    spawnPoints.red = fillSpawns(spawnPoints.red, fallbackRed);
+    spawnPoints.blue = fillSpawns(spawnPoints.blue, fallbackBlue);
+  }
+
+  function fillSpawns(points, fallback) {
+    const result = [...points];
+    for (const p of fallback) {
+      if (result.length >= TEAM_SIZE) break;
+      if (!result.some(q => q.x === p.x && q.y === p.y)) result.push(p);
+    }
+    return result.slice(0, TEAM_SIZE);
+  }
+
+  function createTank(tx, ty, team, human, spawnIndex, type, role) {
+    const spec = TANK_TYPES[type];
+    return {
+      team, human, spawnIndex, type, role,
+      x: tx * TILE + TILE / 2,
+      y: ty * TILE + TILE / 2,
+      lastX: tx * TILE + TILE / 2,
+      lastY: ty * TILE + TILE / 2,
+      dir: team === 'red' ? 0 : Math.PI,
+      preferredDir: team === 'red' ? 0 : Math.PI,
+      radius: spec.radius,
+      speed: human ? spec.speedHuman : spec.speedBot,
+      alive: true,
+      livesLeft: MAX_LIVES,
+      unlimitedRespawn: false,
+      hp: spec.hp,
+      maxHp: spec.hp,
+      speedLevel: 0,
+      rapidLevel: 0,
+      bonusArmor: 0,
+      cooldown: human ? 0 : 0.6 + Math.random() * 0.5,
+      aiTimer: 0.2 + Math.random() * 0.4,
+      moveDecisionTimer: 0,
+      blockedTimer: 0,
+      respawnTimer: 0,
+      invulnTimer: SPAWN_PROTECTION,
+      effects: { shield: 0 }
+    };
+  }
+
+  function applyPlayerCarry(tank) {
+    tank.speedLevel = playerCarry.speedLevel;
+    tank.rapidLevel = playerCarry.rapidLevel;
+    tank.bonusArmor = playerCarry.bonusArmor;
+    tank.maxHp += playerCarry.bonusArmor;
+    tank.hp = tank.maxHp;
+  }
+
+  function savePlayerCarry(tank) {
+    if (!tank.human) return;
+    playerCarry.speedLevel = tank.speedLevel;
+    playerCarry.rapidLevel = tank.rapidLevel;
+    playerCarry.bonusArmor = tank.bonusArmor;
+  }
+
+  function ownFlag(team) { return flags.find(f => f.team === team); }
+  function enemyFlag(team) { return flags.find(f => f.team !== team); }
+  function flagCenter(f) { return { x: f.x * TILE + TILE / 2, y: f.y * TILE + TILE / 2, flag: f }; }
+
+  function flagAtPixel(px, py) {
+    const tx = Math.floor(px / TILE);
+    const ty = Math.floor(py / TILE);
+    return flags.find(f => f.alive && f.x === tx && f.y === ty);
+  }
+
+  function solidAtPixel(px, py, forBullet = false) {
+    const tx = Math.floor(px / TILE);
+    const ty = Math.floor(py / TILE);
+    if (tx < 0 || ty < 0 || tx >= COLS || ty >= ROWS) return '#';
+    const t = grid[ty][tx];
+    if (t === '#' || t === 'x' || t === 'X') return t;
+    if (t === '~' && !forBullet) return t;
+    if (!forBullet && flagAtPixel(px, py)) return 'flag';
+    return '';
+  }
+
+  function canMoveTo(tank, nx, ny) {
+    const r = tank.radius;
+    const pts = [[nx-r,ny-r],[nx+r,ny-r],[nx-r,ny+r],[nx+r,ny+r],[nx,ny]];
+    if (!pts.every(([px,py]) => !solidAtPixel(px, py, false))) return false;
+
+    for (const other of allTanks) {
+      if (!other.alive || other === tank) continue;
+      if (Math.hypot(other.x - nx, other.y - ny) < tank.radius + other.radius + 2) return false;
+    }
+
+    return true;
+  }
+
+  function speedMultiplier(t) {
+    return 1 + Math.min(t.speedLevel, 4) * 0.14;
+  }
+
+  function rapidMultiplier(t) {
+    return Math.max(0.38, 1 - Math.min(t.rapidLevel, 5) * 0.13);
+  }
+
   function update(dt) {
-    if (winner) return;
+    if (gameState !== 'playing') return;
     gameTime += dt;
+
+    updatePowerups(dt);
+    teamFreeze.red = Math.max(0, teamFreeze.red - dt);
+    teamFreeze.blue = Math.max(0, teamFreeze.blue - dt);
 
     for (const t of allTanks) {
       t.cooldown = Math.max(0, t.cooldown - dt);
       t.invulnTimer = Math.max(0, t.invulnTimer - dt);
-      if (!t.alive && t.livesLeft > 0) {
+      t.effects.shield = Math.max(0, t.effects.shield - dt);
+
+      if (!t.alive && (t.unlimitedRespawn || t.livesLeft > 0)) {
         t.respawnTimer -= dt;
         if (t.respawnTimer <= 0) respawnTank(t);
       }
     }
 
     updatePlayer(dt);
-    for (const e of enemies) aiStep(e, dt);
+    for (const bot of bots) updateBot(bot, dt);
     updateBullets(dt);
     updateParticles(dt);
-    checkWinLose();
+    checkRoundEnd();
   }
 
   function updatePlayer(dt) {
-    if (!player.alive) return;
+    if (!player?.alive) return;
 
-    // Без диагонального движения: если нажата вертикаль — она главнее горизонтали.
     let dx = 0, dy = 0;
     if (input.up) dy = -1;
     else if (input.down) dy = 1;
@@ -483,125 +569,294 @@
 
     if (dx || dy) {
       player.dir = Math.atan2(dy, dx);
-      const nx = player.x + dx * player.speed * dt;
-      const ny = player.y + dy * player.speed * dt;
+      const speed = player.speed * speedMultiplier(player);
+      const nx = player.x + dx * speed * dt;
+      const ny = player.y + dy * speed * dt;
       if (canMoveTo(player, nx, player.y)) player.x = nx;
       if (canMoveTo(player, player.x, ny)) player.y = ny;
+      checkPowerupPickup(player);
     }
-    if (input.fire && !fireLatch) { shoot(player); fireLatch = true; }
+
+    if (input.fire && !fireLatch) {
+      shoot(player);
+      fireLatch = true;
+    }
     if (!input.fire) fireLatch = false;
   }
 
-  function checkWinLose() {
-    const redAliveOrRespawning = allTanks.some(t => t.color === 'red' && (t.alive || t.livesLeft > 0));
-    const blueAliveOrRespawning = allTanks.some(t => t.color === 'blue' && (t.alive || t.livesLeft > 0));
-    const redFlagAlive = flags.some(f => f.alive && f.team === 'red');
-    const blueFlagAlive = flags.some(f => f.alive && f.team === 'blue');
+  function updateBot(bot, dt) {
+    if (!bot.alive || teamFreeze[bot.team] > 0) return;
 
-    if (!redFlagAlive) {
-      winner = 'Ты победил. Красный флаг уничтожен.';
-      statusEl.textContent = winner;
-    } else if (!blueFlagAlive) {
-      winner = 'Поражение. Синий флаг уничтожен.';
-      statusEl.textContent = winner;
-    } else if (!redAliveOrRespawning) {
-      winner = 'Ты победил. У красных закончились танки.';
-      statusEl.textContent = winner;
-    } else if (!blueAliveOrRespawning) {
-      winner = 'Поражение. У синих закончились танки.';
-      statusEl.textContent = winner;
+    const target = pickTarget(bot);
+
+    if (target && isAlignedForShot(bot, target) && hasClearShot(bot, target)) shoot(bot);
+
+    bot.aiTimer -= dt;
+    bot.moveDecisionTimer -= dt;
+
+    if (target && bot.moveDecisionTimer <= 0) {
+      bot.preferredDir = chooseDirection(bot, target);
+      bot.moveDecisionTimer = 0.28 + Math.random() * 0.22;
+    }
+
+    bot.dir = bot.preferredDir;
+
+    const moved = moveTank(bot, bot.dir, dt);
+    const progress = Math.hypot(bot.x - bot.lastX, bot.y - bot.lastY);
+
+    if (!moved || progress < 0.35) bot.blockedTimer += dt;
+    else {
+      bot.blockedTimer = Math.max(0, bot.blockedTimer - dt * 2);
+      bot.lastX = bot.x;
+      bot.lastY = bot.y;
+    }
+
+    if (bot.blockedTimer > 0.35) {
+      bot.preferredDir = chooseDirection(bot, target, true);
+      bot.dir = bot.preferredDir;
+      bot.moveDecisionTimer = 0.38;
+      bot.blockedTimer = 0;
+      bot.lastX = bot.x;
+      bot.lastY = bot.y;
+    }
+
+    if (bot.aiTimer <= 0) {
+      bot.aiTimer = 0.38 + Math.random() * 0.55;
+      if (target && hasClearShot(bot, target)) shoot(bot);
     }
   }
 
-  function aiStep(t, dt) {
-    if (!t.alive) return;
+  function pickTarget(bot) {
+    const enemies = allTanks.filter(t => t.alive && t.team !== bot.team);
+    const myFlag = ownFlag(bot.team);
+    const theirFlag = enemyFlag(bot.team);
+    const nearEnemy = closest(bot, enemies.filter(e => Math.hypot(e.x - bot.x, e.y - bot.y) < 320));
+    const usefulBonus = closest(bot, powerups.filter(p => isPowerupUseful(bot, p)));
 
-    const targetTanks = allTanks.filter(other => other.alive && other !== t && other.color !== t.color);
-    const enemyFlags = flags.filter(f => f.alive && f.team !== t.color).map(f => ({
-      x: f.x * TILE + TILE / 2,
-      y: f.y * TILE + TILE / 2,
-      flag: f,
-      color: f.team
-    }));
-    const targets = [...targetTanks, ...enemyFlags];
-    const startGrace = gameTime < 0.75;
+    if (bot.role === 'guard' && myFlag?.alive) {
+      const base = flagCenter(myFlag);
+      const intruder = closest(base, enemies.filter(e => Math.hypot(e.x - base.x, e.y - base.y) < 360));
+      if (intruder) return intruder;
+      if (usefulBonus && Math.hypot(usefulBonus.x - base.x, usefulBonus.y - base.y) < 220) return usefulBonus;
+      const side = bot.spawnIndex % 2 === 0 ? -TILE : TILE;
+      return { x: base.x + (bot.team === 'red' ? TILE : -TILE), y: base.y + side };
+    }
 
-    t.aiTimer -= dt;
-    const target = closest(t, targets);
+    if (nearEnemy) return nearEnemy;
+    if (usefulBonus && Math.hypot(usefulBonus.x - bot.x, usefulBonus.y - bot.y) < 260) return usefulBonus;
+    if (theirFlag?.alive) return flagCenter(theirFlag);
+    return closest(bot, enemies);
+  }
 
-    if (t.aiTimer <= 0) {
-      t.aiTimer = 0.45 + Math.random() * 1.1;
-      if (target && Math.random() < 0.74) {
-        t.dir = cardinalDirectionTo(t, target);
-      } else {
-        t.dir = randomCardinalDirection();
+  function chooseDirection(bot, target, forceAlternative = false) {
+    if (!target) return bot.preferredDir;
+
+    if (bot.role === 'guard') {
+      const f = ownFlag(bot.team);
+      if (f?.alive) {
+        const base = flagCenter(f);
+        const isEnemyTank = target.team && target.team !== bot.team;
+        const enemyNearBase = isEnemyTank && Math.hypot(target.x - base.x, target.y - base.y) < 360;
+        if (Math.hypot(bot.x - base.x, bot.y - base.y) > 180 && !enemyNearBase && !target.powerup) target = base;
       }
-      if (!startGrace && target && Math.random() < 0.24 && hasClearShot(t, target)) shoot(t);
     }
 
-    const nx = t.x + Math.cos(t.dir) * t.speed * dt;
-    const ny = t.y + Math.sin(t.dir) * t.speed * dt;
+    const tx = Math.floor(target.x / TILE);
+    const ty = Math.floor(target.y / TILE);
+    const cx = Math.floor(bot.x / TILE);
+    const cy = Math.floor(bot.y / TILE);
+    const currentDist = Math.abs(tx - cx) + Math.abs(ty - cy);
+
+    const scored = DIRS.map(d => {
+      const nx = bot.x + d.dx * (bot.radius + 7);
+      const ny = bot.y + d.dy * (bot.radius + 7);
+      const nd = Math.abs(tx - (cx + d.dx)) + Math.abs(ty - (cy + d.dy));
+      let score = nd * 8;
+
+      if (!canMoveTo(bot, nx, ny)) score += 1000;
+      if (forceAlternative && Math.abs(normalizeAngle(d.angle - bot.dir)) < 0.01) score += 45;
+      if (Math.abs(normalizeAngle(d.angle - bot.preferredDir)) < 0.01) score -= 2;
+      if (target && (Math.abs(target.x - (bot.x + d.dx * TILE)) < 18 || Math.abs(target.y - (bot.y + d.dy * TILE)) < 18)) score -= 4;
+      if (nd >= currentDist) score += 1.5;
+
+      return { ...d, score };
+    }).sort((a,b) => a.score - b.score);
+
+    return scored[0]?.score >= 1000 ? randomDir() : scored[0].angle;
+  }
+
+  function moveTank(t, dir, dt) {
+    const dx = Math.round(Math.cos(dir));
+    const dy = Math.round(Math.sin(dir));
+    const speed = t.speed * speedMultiplier(t);
+    const nx = t.x + dx * speed * dt;
+    const ny = t.y + dy * speed * dt;
+
     if (canMoveTo(t, nx, ny)) {
-      t.x = nx; t.y = ny;
-    } else {
-      t.dir = randomCardinalDirection();
+      t.x = nx;
+      t.y = ny;
+      checkPowerupPickup(t);
+      return true;
     }
+    return false;
+  }
 
-    if (!startGrace && target) {
-      const wanted = cardinalDirectionTo(t, target);
-      const sameLine = Math.abs(normalizeAngle(wanted - t.dir)) < 0.01;
-      const nearEnough = Math.hypot(target.x - t.x, target.y - t.y) < 380;
-      if (sameLine && nearEnough && hasClearShot(t, target)) shoot(t);
-    }
+  function isAlignedForShot(shooter, target) {
+    const sameRow = Math.abs(shooter.y - target.y) < 18;
+    const sameCol = Math.abs(shooter.x - target.x) < 18;
+    if (!sameRow && !sameCol) return false;
+    return Math.abs(normalizeAngle(cardinalDirectionTo(shooter, target) - shooter.dir)) < 0.01;
   }
 
   function hasClearShot(shooter, target) {
-    // Friendly fire остаётся включённым, но бот старается не стрелять,
-    // если прямо перед ним стоит союзник.
-    const maxDist = Math.min(390, Math.hypot(target.x - shooter.x, target.y - shooter.y));
-    const step = 10;
+    const maxDist = Math.min(400, Math.hypot(target.x - shooter.x, target.y - shooter.y));
     const vx = Math.cos(shooter.dir);
     const vy = Math.sin(shooter.dir);
 
-    for (let d = 20; d < maxDist; d += step) {
+    for (let d = 20; d < maxDist; d += 10) {
       const px = shooter.x + vx * d;
       const py = shooter.y + vy * d;
-
-      const wall = solidAtPixel(px, py, true);
-      if (wall) return false;
+      if (solidAtPixel(px, py, true)) return false;
 
       for (const other of allTanks) {
         if (!other.alive || other === shooter || other === target) continue;
         if (Math.hypot(other.x - px, other.y - py) < other.radius + 6) {
-          return other.color !== shooter.color;
+          return other.team !== shooter.team;
         }
       }
     }
     return true;
   }
 
-  function cardinalDirectionTo(from, to) {
-    const dx = to.x - from.x;
-    const dy = to.y - from.y;
-    if (Math.abs(dx) > Math.abs(dy)) return dx > 0 ? 0 : Math.PI;
-    return dy > 0 ? Math.PI / 2 : -Math.PI / 2;
+  function shoot(t) {
+    if (gameState !== 'playing' || !t.alive || t.cooldown > 0) return;
+    const spec = TANK_TYPES[t.type];
+    t.cooldown = (t.human ? spec.cooldownHuman : spec.cooldownBot) * rapidMultiplier(t);
+    const speed = spec.bulletSpeed * (1 + Math.min(t.rapidLevel, 5) * 0.03);
+
+    bullets.push({
+      x: t.x + Math.cos(t.dir) * (t.radius + 5),
+      y: t.y + Math.sin(t.dir) * (t.radius + 5),
+      vx: Math.cos(t.dir) * speed,
+      vy: Math.sin(t.dir) * speed,
+      owner: t,
+      team: t.team,
+      color: t.team,
+      life: 2.4
+    });
+    beep(t.human ? 220 : 160, 0.035);
   }
 
-  function randomCardinalDirection() {
-    return [0, Math.PI / 2, Math.PI, -Math.PI / 2][Math.floor(Math.random() * 4)];
+  function damageTank(t) {
+    if (!t.alive || t.invulnTimer > 0 || t.effects.shield > 0) return;
+    t.hp--;
+    if (t.hp <= 0) destroyTank(t);
+    else boom(t.x, t.y, 8);
   }
 
-  function normalizeAngle(a) {
-    return Math.atan2(Math.sin(a), Math.cos(a));
-  }
+  function destroyTank(t) {
+    if (!t.alive) return;
+    t.alive = false;
 
-  function closest(from, list) {
-    let best = null, bestD = Infinity;
-    for (const item of list) {
-      const d = Math.hypot(item.x - from.x, item.y - from.y);
-      if (d < bestD) { bestD = d; best = item; }
+    if (t.unlimitedRespawn) {
+      t.respawnTimer = PLAYER_RESPAWN_DELAY;
+      statusEl.textContent = 'Тебя подбили. Возрождение через секунду.';
+    } else {
+      t.livesLeft--;
+      t.respawnTimer = t.livesLeft > 0 ? RESPAWN_DELAY : 0;
     }
-    return best;
+
+    boom(t.x, t.y, 18);
+  }
+
+  function respawnTank(t) {
+    if (!t.unlimitedRespawn && t.livesLeft <= 0) return;
+    const spawns = spawnPoints[t.team];
+    const s = spawns[t.spawnIndex % spawns.length];
+
+    t.x = s.x * TILE + TILE / 2;
+    t.y = s.y * TILE + TILE / 2;
+    t.lastX = t.x;
+    t.lastY = t.y;
+    t.dir = t.team === 'red' ? 0 : Math.PI;
+    t.preferredDir = t.dir;
+    t.alive = true;
+    t.hp = t.maxHp;
+    t.cooldown = t.human ? 0.18 : 0.9 + Math.random() * 0.5;
+    t.invulnTimer = SPAWN_PROTECTION;
+    t.effects.shield = 0;
+    t.blockedTimer = 0;
+    boom(t.x, t.y, 10);
+  }
+
+  function updateBullets(dt) {
+    neutralizeBullets();
+
+    for (const b of bullets) {
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+      b.life -= dt;
+
+      const hit = solidAtPixel(b.x, b.y, true);
+      if (hit) {
+        const tx = Math.floor(b.x / TILE);
+        const ty = Math.floor(b.y / TILE);
+        if (hit === 'x' || hit === 'X') damageBrick(tx, ty);
+        b.life = 0;
+        boom(b.x, b.y, 6);
+        continue;
+      }
+
+      for (const f of flags) {
+        if (!f.alive || f.team === b.team) continue;
+        const fx = f.x * TILE + TILE / 2;
+        const fy = f.y * TILE + TILE / 2;
+        if (Math.hypot(fx - b.x, fy - b.y) < 18) {
+          f.hp--;
+          b.life = 0;
+          boom(b.x, b.y, 8);
+          if (f.hp <= 0) {
+            f.alive = false;
+            boom(fx, fy, 26);
+          }
+          break;
+        }
+      }
+
+      if (b.life <= 0) continue;
+
+      for (const t of allTanks) {
+        if (!t.alive || t === b.owner || t.invulnTimer > 0) continue;
+        if (Math.hypot(t.x - b.x, t.y - b.y) < t.radius + 4) {
+          damageTank(t);
+          b.life = 0;
+          break;
+        }
+      }
+    }
+
+    bullets = bullets.filter(b => b.life > 0);
+  }
+
+  function neutralizeBullets() {
+    for (let i = 0; i < bullets.length; i++) {
+      const a = bullets[i];
+      if (a.life <= 0) continue;
+      for (let j = i + 1; j < bullets.length; j++) {
+        const b = bullets[j];
+        if (b.life <= 0) continue;
+        if (Math.hypot(a.x - b.x, a.y - b.y) >= 10) continue;
+        if (a.vx * b.vx + a.vy * b.vy < 0) {
+          const cx = (a.x + b.x) / 2;
+          const cy = (a.y + b.y) / 2;
+          a.life = 0;
+          b.life = 0;
+          boom(cx, cy, 8);
+          break;
+        }
+      }
+    }
+    bullets = bullets.filter(b => b.life > 0);
   }
 
   function damageBrick(tx, ty) {
@@ -622,91 +877,119 @@
     }
   }
 
-  function updateBullets(dt) {
-    neutralizeCollidingBullets();
-
-    for (const b of bullets) {
-      b.x += b.vx * dt;
-      b.y += b.vy * dt;
-      b.life -= dt;
-
-      const hit = solidAtPixel(b.x, b.y, true);
-      if (hit) {
-        const tx = Math.floor(b.x / TILE), ty = Math.floor(b.y / TILE);
-        if (hit === 'x' || hit === 'X') damageBrick(tx, ty); // пробиваемая стена
-        b.life = 0;
-        boom(b.x, b.y, 6);
-        beep(85, 0.04);
-        continue;
-      }
-
-      for (const f of flags) {
-        if (!f.alive || f.team === b.team) continue;
-        const fx = f.x * TILE + TILE / 2;
-        const fy = f.y * TILE + TILE / 2;
-        if (Math.hypot(fx - b.x, fy - b.y) < 18) {
-          f.hp -= 1;
-          b.life = 0;
-          boom(b.x, b.y, 8);
-          statusEl.textContent = f.team === 'red'
-            ? `Красный флаг повреждён: ${Math.max(0, f.hp)}/3`
-            : `Синий флаг повреждён: ${Math.max(0, f.hp)}/3`;
-          beep(70, 0.08);
-          if (f.hp <= 0) {
-            f.alive = false;
-            boom(fx, fy, 26);
-            statusEl.textContent = f.team === 'red' ? 'Красный флаг уничтожен!' : 'Синий флаг уничтожен!';
-          }
-          break;
-        }
-      }
-      if (b.life <= 0) continue;
-
-      const tanks = allTanks.filter(t => t.alive && t !== b.owner && t.invulnTimer <= 0);
-      for (const t of tanks) {
-        if (Math.hypot(t.x - b.x, t.y - b.y) < t.radius + 4) {
-          destroyTank(t);
-          b.life = 0;
-          break;
-        }
-      }
+  function updatePowerups(dt) {
+    powerupTimer -= dt;
+    if (powerupTimer <= 0) {
+      powerupTimer = POWERUP_SPAWN_EVERY + Math.random() * 3;
+      if (powerups.length < MAX_POWERUPS) spawnPowerup();
     }
-    bullets = bullets.filter(b => b.life > 0);
+
+    for (const p of powerups) p.ttl -= dt;
+    powerups = powerups.filter(p => p.ttl > 0);
   }
 
-  function neutralizeCollidingBullets() {
-    for (let i = 0; i < bullets.length; i++) {
-      const a = bullets[i];
-      if (a.life <= 0) continue;
-      for (let j = i + 1; j < bullets.length; j++) {
-        const b = bullets[j];
-        if (b.life <= 0) continue;
+  function spawnPowerup() {
+    for (let tries = 0; tries < 80; tries++) {
+      const tx = 2 + Math.floor(Math.random() * (COLS - 4));
+      const ty = 2 + Math.floor(Math.random() * (ROWS - 4));
+      if (grid[ty][tx] !== '.') continue;
 
-        const close = Math.hypot(a.x - b.x, a.y - b.y) < 10;
-        if (!close) continue;
+      const x = tx * TILE + TILE / 2;
+      const y = ty * TILE + TILE / 2;
 
-        // Считаем нейтрализацией именно встречные/пересекающиеся снаряды,
-        // а не два снаряда, летящие рядом в одну сторону.
-        const dot = a.vx * b.vx + a.vy * b.vy;
-        if (dot < 0) {
-          const cx = (a.x + b.x) / 2;
-          const cy = (a.y + b.y) / 2;
-          a.life = 0;
-          b.life = 0;
-          boom(cx, cy, 8);
-          beep(120, 0.035);
-          break;
-        }
+      if (flagAtPixel(x, y)) continue;
+      if (powerups.some(p => p.tx === tx && p.ty === ty)) continue;
+      if (allTanks.some(t => t.alive && Math.hypot(t.x - x, t.y - y) < TILE * 1.4)) continue;
+
+      const type = POWERUPS[Math.floor(Math.random() * POWERUPS.length)];
+      powerups.push({ ...type, tx, ty, x, y, powerup: true, ttl: 24 });
+      return;
+    }
+  }
+
+  function checkPowerupPickup(t) {
+    for (const p of powerups) {
+      if (Math.hypot(t.x - p.x, t.y - p.y) < t.radius + 12) {
+        applyPowerup(t, p);
+        p.ttl = 0;
+        boom(p.x, p.y, 14);
+        beep(310, 0.05);
+        break;
       }
     }
-    bullets = bullets.filter(b => b.life > 0);
+    powerups = powerups.filter(p => p.ttl > 0);
+  }
+
+  function isPowerupUseful(t, p) {
+    if (p.kind === 'repair' && t.hp >= t.maxHp) return false;
+    if (p.kind === 'shield' && t.effects.shield > 1) return false;
+    return true;
+  }
+
+  function applyPowerup(t, p) {
+    if (p.kind === 'speed') t.speedLevel = Math.min(4, t.speedLevel + 1);
+    if (p.kind === 'rapid') t.rapidLevel = Math.min(5, t.rapidLevel + 1);
+    if (p.kind === 'armor') {
+      t.maxHp++;
+      t.hp++;
+      t.bonusArmor++;
+    }
+    if (p.kind === 'repair') t.hp = Math.min(t.maxHp, t.hp + 1);
+    if (p.kind === 'shield') t.effects.shield = Math.max(t.effects.shield, 4.5);
+    if (p.kind === 'freeze') {
+      const enemy = t.team === 'red' ? 'blue' : 'red';
+      teamFreeze[enemy] = Math.max(teamFreeze[enemy], 3);
+    }
+
+    if (t.human) savePlayerCarry(t);
+    statusEl.textContent = `${t.team === 'red' ? 'Красный' : 'Синий'} танк получил бонус: ${p.label}`;
+  }
+
+  function checkRoundEnd() {
+    const redFlag = flags.some(f => f.team === 'red' && f.alive);
+    const blueFlag = flags.some(f => f.team === 'blue' && f.alive);
+    const redAliveOrReserve = allTanks.some(t => t.team === 'red' && (t.alive || t.livesLeft > 0));
+    const blueAliveOrReserve = allTanks.some(t => t.team === 'blue' && (t.alive || t.livesLeft > 0 || t.unlimitedRespawn));
+
+    if (!redFlag) endRound('blue', 'Красный флаг уничтожен.');
+    else if (!blueFlag) endRound('red', 'Синий флаг уничтожен.');
+    else if (!redAliveOrReserve) endRound('blue', 'У красных закончились танки.');
+    else if (!blueAliveOrReserve) endRound('red', 'У синих закончились танки.');
+  }
+
+  function cardinalDirectionTo(from, to) {
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    if (Math.abs(dx) > Math.abs(dy)) return dx > 0 ? 0 : Math.PI;
+    return dy > 0 ? Math.PI / 2 : -Math.PI / 2;
+  }
+
+  function randomDir() {
+    return DIRS[Math.floor(Math.random() * DIRS.length)].angle;
+  }
+
+  function normalizeAngle(a) {
+    return Math.atan2(Math.sin(a), Math.cos(a));
+  }
+
+  function closest(from, list) {
+    let best = null;
+    let bestD = Infinity;
+    for (const item of list) {
+      const d = Math.hypot(item.x - from.x, item.y - from.y);
+      if (d < bestD) {
+        bestD = d;
+        best = item;
+      }
+    }
+    return best;
   }
 
   function boom(x, y, count) {
     for (let i = 0; i < count; i++) {
       const a = Math.random() * Math.PI * 2;
       const s = 60 + Math.random() * 160;
-      particles.push({ x, y, vx: Math.cos(a)*s, vy: Math.sin(a)*s, life: 0.25 + Math.random()*0.35 });
+      particles.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: 0.25 + Math.random() * 0.35 });
     }
   }
 
@@ -720,63 +1003,71 @@
   }
 
   function draw() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for (let y = 0; y < ROWS; y++) {
-      for (let x = 0; x < COLS; x++) {
-        const t = grid[y][x];
-        drawTile(x, y, t);
-      }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!grid) {
+      drawEmpty();
+      drawHud();
+      return;
     }
+
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) drawTile(x, y, grid[y][x]);
+    }
+
     drawSpawnPoints();
-    for (const f of flags) drawBaseAndFlag(f);
+    for (const p of powerups) drawPowerup(p);
+    for (const f of flags) drawFlag(f);
     for (const b of bullets) drawBullet(b);
     for (const t of allTanks) drawTank(t);
     for (const p of particles) drawParticle(p);
-
-    if (winner) {
-      ctx.fillStyle = 'rgba(0,0,0,0.55)';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 34px system-ui';
-      ctx.textAlign = 'center';
-      ctx.fillText(winner, canvas.width / 2, canvas.height / 2);
-      ctx.font = '18px system-ui';
-      ctx.fillText('Нажми Restart', canvas.width / 2, canvas.height / 2 + 38);
-      ctx.textAlign = 'left';
-    }
-
-    const redAlive = allTanks.filter(e => e.alive && e.color === 'red').length;
-    const blueAlive = allTanks.filter(e => e.alive && e.color === 'blue').length;
-    const redLives = allTanks.filter(e => e.color === 'red').reduce((sum, t) => sum + t.livesLeft, 0);
-    const blueLives = allTanks.filter(e => e.color === 'blue').reduce((sum, t) => sum + t.livesLeft, 0);
-    const redFlag = flags.find(f => f.team === 'red');
-    const blueFlag = flags.find(f => f.team === 'blue');
-    scoreEl.textContent = `Танки живые: синие ${blueAlive}/${TEAM_SIZE}, красные ${redAlive}/${TEAM_SIZE}\nОстаток появлений: синие ${blueLives}, красные ${redLives}\nФлаги HP R/B: ${redFlag?.alive ? redFlag.hp : 0}/${blueFlag?.alive ? blueFlag.hp : 0}`;
+    drawHud();
   }
 
-  function drawTile(x,y,t) {
-    const px = x*TILE, py = y*TILE;
+  function drawEmpty() {
+    for (let y = 0; y < ROWS; y++) {
+      for (let x = 0; x < COLS; x++) drawTile(x, y, '.');
+    }
+  }
+
+  function drawHud() {
+    const redAlive = allTanks.filter(t => t.team === 'red' && t.alive).length;
+    const blueAlive = allTanks.filter(t => t.team === 'blue' && t.alive).length;
+    const redReserve = allTanks.filter(t => t.team === 'red' && !t.alive).reduce((sum, t) => sum + Math.max(0, t.livesLeft), 0);
+    const blueReserve = allTanks.filter(t => t.team === 'blue' && !t.alive && !t.unlimitedRespawn).reduce((sum, t) => sum + Math.max(0, t.livesLeft), 0);
+
+    const redTotal = redAlive + redReserve;
+    const blueTotal = blueAlive + blueReserve;
+    const playerMark = player?.alive ? '+ игрок' : '+ игрок ↻';
+    scoreEl.textContent = `Раунды ${roundScore.blue}:${roundScore.red} · Танки: синие ${blueTotal} ${playerMark} · красные ${redTotal}`;
+  }
+
+  function drawTile(x, y, tile) {
+    const px = x * TILE;
+    const py = y * TILE;
     ctx.fillStyle = '#314c31';
     ctx.fillRect(px, py, TILE, TILE);
     ctx.fillStyle = 'rgba(255,255,255,0.035)';
     ctx.fillRect(px, py, 1, 1);
 
-    if (t === '#') {
+    if (tile === '#') {
       ctx.fillStyle = '#7f7a70';
-      ctx.fillRect(px+2, py+2, TILE-4, TILE-4);
+      ctx.fillRect(px + 2, py + 2, TILE - 4, TILE - 4);
       ctx.fillStyle = '#a8a299';
-      ctx.fillRect(px+6, py+6, TILE-12, 5);
-    } else if (t === 'x' || t === 'X') {
-      const strong = t === 'X';
+      ctx.fillRect(px + 6, py + 6, TILE - 12, 5);
+    } else if (tile === 'x' || tile === 'X') {
+      const strong = tile === 'X';
       ctx.fillStyle = strong ? '#6f3d35' : '#884935';
-      ctx.fillRect(px+2, py+2, TILE-4, TILE-4);
+      ctx.fillRect(px + 2, py + 2, TILE - 4, TILE - 4);
       ctx.strokeStyle = strong ? '#d09a75' : '#ba765d';
       ctx.lineWidth = strong ? 3 : 2;
-      const mid = TILE / 2;
       ctx.beginPath();
-      ctx.moveTo(px+3, py+mid); ctx.lineTo(px+TILE-3, py+mid);
-      ctx.moveTo(px+mid, py+3); ctx.lineTo(px+mid, py+TILE-3);
+      ctx.moveTo(px + 3, py + TILE / 2);
+      ctx.lineTo(px + TILE - 3, py + TILE / 2);
+      ctx.moveTo(px + TILE / 2, py + 3);
+      ctx.lineTo(px + TILE / 2, py + TILE - 3);
       ctx.stroke();
+
       if (strong) {
         const hp = brickHp.get(`${x},${y}`) ?? 3;
         ctx.fillStyle = '#f0d7a0';
@@ -787,56 +1078,84 @@
         ctx.textAlign = 'left';
         ctx.textBaseline = 'alphabetic';
       }
-    } else if (t === '~') {
+    } else if (tile === '~') {
       ctx.fillStyle = '#2c5f88';
       ctx.fillRect(px, py, TILE, TILE);
       ctx.strokeStyle = 'rgba(255,255,255,0.25)';
       ctx.beginPath();
-      ctx.arc(px+12, py+18, 8, 0, Math.PI);
-      ctx.arc(px+28, py+22, 7, 0, Math.PI);
+      ctx.arc(px + 12, py + 18, 8, 0, Math.PI);
+      ctx.arc(px + 28, py + 22, 7, 0, Math.PI);
       ctx.stroke();
     }
   }
 
   function drawSpawnPoints() {
     for (const team of ['red', 'blue']) {
-      for (const sp of spawnPoints[team]) {
-        const px = sp.x * TILE, py = sp.y * TILE;
+      for (const s of spawnPoints[team]) {
+        const px = s.x * TILE;
+        const py = s.y * TILE;
         ctx.strokeStyle = team === 'red' ? 'rgba(255,120,110,0.55)' : 'rgba(120,190,255,0.55)';
         ctx.lineWidth = 2;
         ctx.strokeRect(px + 7, py + 7, TILE - 14, TILE - 14);
         ctx.beginPath();
-        ctx.moveTo(px + 10, py + TILE / 2); ctx.lineTo(px + TILE - 10, py + TILE / 2);
-        ctx.moveTo(px + TILE / 2, py + 10); ctx.lineTo(px + TILE / 2, py + TILE - 10);
+        ctx.moveTo(px + 10, py + TILE / 2);
+        ctx.lineTo(px + TILE - 10, py + TILE / 2);
+        ctx.moveTo(px + TILE / 2, py + 10);
+        ctx.lineTo(px + TILE / 2, py + TILE - 10);
         ctx.stroke();
       }
     }
   }
 
-  function drawBaseAndFlag(f) {
-    if (!f.alive) return;
-    const px = f.x*TILE, py = f.y*TILE;
+  function drawPowerup(p) {
+    const pulse = 1 + Math.sin(gameTime * 6) * 0.08;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.scale(pulse, pulse);
+    ctx.fillStyle = 'rgba(0,0,0,0.32)';
+    ctx.beginPath();
+    ctx.arc(0, 0, 15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#f4c84b';
+    ctx.beginPath();
+    ctx.arc(0, 0, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#182018';
+    ctx.font = 'bold 15px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(p.icon, 0, 1);
+    ctx.restore();
+  }
 
+  function drawFlag(f) {
+    if (!f.alive) return;
+    const px = f.x * TILE;
+    const py = f.y * TILE;
     ctx.fillStyle = '#6e6a61';
-    ctx.fillRect(px+3, py+3, TILE-6, TILE-6);
+    ctx.fillRect(px + 3, py + 3, TILE - 6, TILE - 6);
     ctx.strokeStyle = 'rgba(255,255,255,0.24)';
     ctx.lineWidth = 2;
-    ctx.strokeRect(px+5, py+5, TILE-10, TILE-10);
-    ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    ctx.fillRect(px+7, py+22, TILE-14, 4);
+    ctx.strokeRect(px + 5, py + 5, TILE - 10, TILE - 10);
 
     ctx.fillStyle = f.team === 'red' ? '#d64a3a' : '#4289d8';
     ctx.beginPath();
-    ctx.moveTo(px+12, py+7); ctx.lineTo(px+25, py+12); ctx.lineTo(px+12, py+17); ctx.closePath();
+    ctx.moveTo(px + 12, py + 7);
+    ctx.lineTo(px + 25, py + 12);
+    ctx.lineTo(px + 12, py + 17);
+    ctx.closePath();
     ctx.fill();
+
     ctx.strokeStyle = '#e9f2e8';
-    ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(px+11, py+7); ctx.lineTo(px+11, py+27); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(px + 11, py + 7);
+    ctx.lineTo(px + 11, py + 27);
+    ctx.stroke();
 
     ctx.fillStyle = '#171b18';
-    ctx.fillRect(px+7, py+27, 18, 3);
+    ctx.fillRect(px + 7, py + 27, 18, 3);
     ctx.fillStyle = f.team === 'red' ? '#ff9b8f' : '#9dcbff';
-    ctx.fillRect(px+7, py+27, 18 * (f.hp / 3), 3);
+    ctx.fillRect(px + 7, py + 27, 18 * (f.hp / 3), 3);
   }
 
   function drawTank(t) {
@@ -844,33 +1163,76 @@
     ctx.save();
     ctx.translate(t.x, t.y);
     ctx.rotate(t.dir);
-    const c = t.color === 'red' ? '#d64a3a' : '#4289d8';
-    const blink = t.invulnTimer > 0 && Math.floor(gameTime * 12) % 2 === 0;
-    ctx.globalAlpha = blink ? 0.52 : 1;
-    ctx.fillStyle = 'rgba(0,0,0,0.28)';
-    ctx.fillRect(-16, -12, 32, 24);
-    ctx.fillStyle = c;
-    ctx.fillRect(-15, -11, 30, 22);
-    ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    ctx.fillRect(-15, -15, 30, 6);
-    ctx.fillRect(-15, 9, 30, 6);
-    ctx.fillStyle = '#222';
-    ctx.fillRect(0, -4, 23, 8);
 
-    if (t.human) {
-      ctx.fillStyle = '#f4c84b';
-      ctx.fillRect(-9, -8, 18, 16);
-      ctx.strokeStyle = '#111';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(-9, -8, 18, 16);
+    const color = t.team === 'red' ? '#d64a3a' : '#4289d8';
+    const heavy = t.type === 'heavy';
+    const blink = (t.invulnTimer > 0 || teamFreeze[t.team] > 0) && Math.floor(gameTime * 12) % 2 === 0;
+    ctx.globalAlpha = blink ? 0.52 : 1;
+
+    if (t.effects.shield > 0) {
+      ctx.save();
+      ctx.rotate(-t.dir);
+      ctx.strokeStyle = '#c7f7ff';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, t.radius + 9, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+
+    if (heavy) {
+      ctx.fillRect(-20, -15, 40, 30);
+      ctx.fillStyle = color;
+      ctx.fillRect(-19, -14, 38, 28);
+      ctx.fillStyle = 'rgba(0,0,0,0.25)';
+      ctx.fillRect(-19, -18, 38, 7);
+      ctx.fillRect(-19, 11, 38, 7);
+      ctx.fillStyle = '#1c1c1c';
+      ctx.fillRect(0, -5, 27, 10);
+      ctx.fillStyle = '#dad2b8';
+      ctx.fillRect(-10, -9, 20, 18);
     } else {
-      ctx.fillStyle = '#f0f5ef';
-      ctx.fillRect(-5, -5, 10, 10);
+      ctx.fillRect(-16, -12, 32, 24);
+      ctx.fillStyle = color;
+      ctx.fillRect(-15, -11, 30, 22);
+      ctx.fillStyle = 'rgba(0,0,0,0.22)';
+      ctx.fillRect(-15, -15, 30, 6);
+      ctx.fillRect(-15, 9, 30, 6);
+      ctx.fillStyle = '#222';
+      ctx.fillRect(0, -4, 23, 8);
+      ctx.fillStyle = t.human ? '#f4c84b' : '#f0f5ef';
+      ctx.fillRect(t.human ? -9 : -5, t.human ? -8 : -5, t.human ? 18 : 10, t.human ? 16 : 10);
+      if (t.human) {
+        ctx.strokeStyle = '#111';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(-9, -8, 18, 16);
+      }
+    }
+
+    if (t.maxHp > 1 || t.hp < t.maxHp) {
+      ctx.rotate(-t.dir);
+      ctx.fillStyle = '#171b18';
+      ctx.fillRect(-12, -25, 24, 4);
+      ctx.fillStyle = t.hp === t.maxHp ? '#f0d7a0' : '#ff9b8f';
+      ctx.fillRect(-12, -25, 24 * (t.hp / t.maxHp), 4);
+      ctx.rotate(t.dir);
+    }
+
+    if (t.speedLevel > 0 || t.rapidLevel > 0) {
+      ctx.rotate(-t.dir);
+      ctx.fillStyle = '#f4c84b';
+      ctx.font = 'bold 10px system-ui';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(`${t.speedLevel ? 'S'+t.speedLevel : ''}${t.rapidLevel ? ' R'+t.rapidLevel : ''}`, 0, 22);
+      ctx.rotate(t.dir);
     }
 
     if (t.human) {
       ctx.rotate(-t.dir);
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#fff';
       ctx.strokeStyle = 'rgba(0,0,0,0.45)';
       ctx.lineWidth = 3;
       ctx.font = 'bold 13px system-ui';
@@ -878,8 +1240,6 @@
       ctx.textBaseline = 'middle';
       ctx.strokeText('1', 0, 1);
       ctx.fillText('1', 0, 1);
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'alphabetic';
     }
 
     ctx.restore();
@@ -887,14 +1247,16 @@
   }
 
   function drawBullet(b) {
-    ctx.fillStyle = b.color === 'red' ? '#ffb2a8' : '#b8dcff';
-    ctx.beginPath(); ctx.arc(b.x, b.y, 4, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = b.team === 'red' ? '#ffb2a8' : '#b8dcff';
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, 4, 0, Math.PI * 2);
+    ctx.fill();
   }
 
   function drawParticle(p) {
     ctx.globalAlpha = Math.max(0, p.life * 2.6);
     ctx.fillStyle = '#f4c84b';
-    ctx.fillRect(p.x-2, p.y-2, 4, 4);
+    ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
     ctx.globalAlpha = 1;
   }
 
@@ -907,17 +1269,8 @@
     requestAnimationFrame(frame);
   }
 
-  document.getElementById('fullscreen').addEventListener('click', async () => {
-    const card = document.querySelector('.game-card');
-    try {
-      if (!document.fullscreenElement) await card.requestFullscreen();
-      else await document.exitFullscreen();
-    } catch {}
-  });
-
-  document.getElementById('restart').addEventListener('click', () => loadMap(0));
-  mapSelect.addEventListener('change', () => loadMap(0));
-  loadMap(0);
+  showMenu('menu', 'Tank You!', 'Игра до 5 побед');
+  draw();
   requestAnimationFrame(frame);
 })();
 </script>
