@@ -148,19 +148,22 @@
     button { padding: 8px 10px; }
   }
 
-  .touch-controls {
-    display: none;
-  }
-
-  @media (pointer: coarse) {
-    .touch-controls {
-      position: fixed;
-      inset: 0;
-      z-index: 60;
-      pointer-events: none;
-      display: block;
-      touch-action: none;
+    .touch-btn {
+      width: 46px;
+      height: 46px;
+      font-size: 17px;
     }
+
+    .touch-fire-wrap {
+      right: max(18px, env(safe-area-inset-right));
+      bottom: max(14px, env(safe-area-inset-bottom));
+    }
+
+    .touch-fire {
+      width: 86px;
+      height: 86px;
+    }
+  }
 
     .touch-dpad {
       position: fixed;
@@ -179,97 +182,420 @@
       bottom: max(24px, env(safe-area-inset-bottom));
       pointer-events: auto;
     }
+  }
 
-    .touch-btn {
-      width: 54px;
-      height: 54px;
-      border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 999px;
-      background: rgba(28, 38, 32, 0.72);
-      color: #e9f2e8;
-      box-shadow: 0 10px 26px rgba(0,0,0,0.38);
-      backdrop-filter: blur(5px);
-      font-weight: 900;
-      font-size: 20px;
+    .joy-knob {
+      width: 46px;
+      height: 46px;
+      margin-left: -23px;
+      margin-top: -23px;
+    }
+
+    .fire-zone {
+      right: max(22px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      width: 88px;
+      height: 88px;
+      font-size: 15px;
+    }
+  }
+
+
+  .touch-controls {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    body.touch-device .game-card.touch-active .touch-controls {
+      display: block;
+    }
+
+    body.touch-device .touch-controls {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      pointer-events: none;
       touch-action: none;
       user-select: none;
       -webkit-user-select: none;
     }
 
-    .touch-btn.pressed,
-    .touch-btn:active {
-      background: rgba(74, 92, 80, 0.92);
-      transform: scale(0.97);
+    body.touch-device .joy-zone {
+      position: fixed;
+      left: max(18px, env(safe-area-inset-left));
+      bottom: max(18px, env(safe-area-inset-bottom));
+      width: 142px;
+      height: 142px;
+      border-radius: 999px;
+      pointer-events: auto;
+      touch-action: none;
     }
 
-    .touch-empty {
-      visibility: hidden;
+    body.touch-device .joy-base {
+      position: absolute;
+      inset: 10px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.10), rgba(255,255,255,0.04) 42%, rgba(0,0,0,0.20) 43%),
+        rgba(25, 35, 30, 0.62);
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.42);
+      backdrop-filter: blur(6px);
     }
 
-    .touch-fire {
-      width: 104px;
-      height: 104px;
-      background: rgba(92, 47, 35, 0.78);
-      font-size: 17px;
+    body.touch-device .joy-base::before,
+    body.touch-device .joy-base::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.18);
+      border-radius: 999px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    body.touch-device .joy-base::before {
+      width: 70%;
+      height: 2px;
+    }
+
+    body.touch-device .joy-base::after {
+      width: 2px;
+      height: 70%;
+    }
+
+    body.touch-device .joy-knob {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 58px;
+      height: 58px;
+      margin-left: -29px;
+      margin-top: -29px;
+      border-radius: 999px;
+      background: rgba(70, 91, 78, 0.92);
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.38);
+      transform: translate(0, 0);
+      will-change: transform;
+    }
+
+    body.touch-device .joy-zone.active .joy-knob {
+      background: rgba(98, 122, 104, 0.96);
+    }
+
+    body.touch-device .fire-zone {
+      position: fixed;
+      right: max(22px, env(safe-area-inset-right));
+      bottom: max(30px, env(safe-area-inset-bottom));
+      width: 112px;
+      height: 112px;
+      border-radius: 999px;
+      pointer-events: auto;
+      touch-action: none;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(102, 50, 36, 0.82);
+      color: #fff4ee;
+      box-shadow: 0 14px 34px rgba(0,0,0,0.42);
+      backdrop-filter: blur(6px);
+      font: 900 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       letter-spacing: 0.5px;
     }
 
-    .touch-fire.pressed,
-    .touch-fire:active {
-      background: rgba(140, 70, 48, 0.95);
+    body.touch-device .fire-zone.pressed,
+    body.touch-device .fire-zone:active {
+      background: rgba(146, 72, 50, 0.96);
+      transform: scale(0.97);
     }
   }
 
-  @media (pointer: coarse) and (max-width: 430px) {
-    .touch-dpad {
-      left: 10px;
-      bottom: max(14px, env(safe-area-inset-bottom));
-      grid-template-columns: repeat(3, 48px);
-      grid-template-rows: repeat(3, 48px);
-      gap: 6px;
+  @media (max-width: 480px) {
+    body.touch-device .joy-zone {
+      left: max(12px, env(safe-area-inset-left));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      width: 128px;
+      height: 128px;
     }
 
-    .touch-btn {
-      width: 48px;
-      height: 48px;
-      font-size: 18px;
+    body.touch-device .joy-knob {
+      width: 52px;
+      height: 52px;
+      margin-left: -26px;
+      margin-top: -26px;
     }
 
-    .touch-fire-wrap {
-      right: 12px;
-      bottom: max(18px, env(safe-area-inset-bottom));
+    body.touch-device .fire-zone {
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(20px, env(safe-area-inset-bottom));
+      width: 96px;
+      height: 96px;
+      font-size: 16px;
+    }
+  }
+
+  @media (orientation: landscape) and (max-height: 520px) {
+    body.touch-device .game-card.touch-active .touch-controls {
+      display: block;
     }
 
-    .touch-fire {
-      width: 92px;
-      height: 92px;
+    body.touch-device .touch-controls {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      pointer-events: none;
+      touch-action: none;
+    }
+
+    body.touch-device .joy-zone {
+      position: fixed;
+      left: max(18px, env(safe-area-inset-left));
+      bottom: max(10px, env(safe-area-inset-bottom));
+      width: 116px;
+      height: 116px;
+      pointer-events: auto;
+    }
+
+    body.touch-device .joy-knob {
+      width: 46px;
+      height: 46px;
+      margin-left: -23px;
+      margin-top: -23px;
+    }
+
+    body.touch-device .fire-zone {
+      position: fixed;
+      right: max(22px, env(safe-area-inset-right));
+      bottom: max(16px, env(safe-area-inset-bottom));
+      width: 88px;
+      height: 88px;
+      pointer-events: auto;
       font-size: 15px;
     }
   }
 
-  @media (pointer: coarse) and (orientation: landscape) {
-    .touch-dpad {
-      left: max(16px, env(safe-area-inset-left));
-      bottom: max(12px, env(safe-area-inset-bottom));
-      grid-template-columns: repeat(3, 46px);
-      grid-template-rows: repeat(3, 46px);
-      gap: 6px;
+
+  /* HARD OVERRIDE: touch controls must never appear on desktop/laptop */
+  .touch-controls,
+  .mobile-controls {
+    display: none !important;
+  }
+
+  body.real-mobile.game-running .touch-controls {
+    display: block !important;
+  }
+
+  body.real-mobile.game-running .touch-controls {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 70 !important;
+    pointer-events: none !important;
+    touch-action: none !important;
+  }
+
+  body.real-mobile.game-running .joy-zone {
+    position: fixed !important;
+    left: max(18px, env(safe-area-inset-left)) !important;
+    bottom: max(18px, env(safe-area-inset-bottom)) !important;
+    width: 142px !important;
+    height: 142px !important;
+    border-radius: 999px !important;
+    pointer-events: auto !important;
+    touch-action: none !important;
+  }
+
+  body.real-mobile.game-running .fire-zone {
+    position: fixed !important;
+    right: max(22px, env(safe-area-inset-right)) !important;
+    bottom: max(30px, env(safe-area-inset-bottom)) !important;
+    width: 112px !important;
+    height: 112px !important;
+    border-radius: 999px !important;
+    pointer-events: auto !important;
+    touch-action: none !important;
+  }
+
+  @media (max-width: 480px) {
+    body.real-mobile.game-running .joy-zone {
+      left: max(12px, env(safe-area-inset-left)) !important;
+      bottom: max(12px, env(safe-area-inset-bottom)) !important;
+      width: 128px !important;
+      height: 128px !important;
     }
 
-    .touch-btn {
-      width: 46px;
-      height: 46px;
-      font-size: 17px;
+    body.real-mobile.game-running .fire-zone {
+      right: max(14px, env(safe-area-inset-right)) !important;
+      bottom: max(20px, env(safe-area-inset-bottom)) !important;
+      width: 96px !important;
+      height: 96px !important;
+    }
+  }
+
+
+  /* FINAL MOBILE VISUAL OVERRIDE */
+  body.real-mobile.game-running .touch-controls {
+    display: block !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483000 !important;
+    pointer-events: none !important;
+    touch-action: none !important;
+  }
+
+  body.real-mobile.game-running .joy-zone {
+    display: block !important;
+    position: fixed !important;
+    left: max(14px, env(safe-area-inset-left)) !important;
+    bottom: max(14px, env(safe-area-inset-bottom)) !important;
+    width: 150px !important;
+    height: 150px !important;
+    border-radius: 999px !important;
+    pointer-events: auto !important;
+    touch-action: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.real-mobile.game-running .joy-base {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 999px !important;
+    background: rgba(14, 20, 17, 0.72) !important;
+    border: 2px solid rgba(255,255,255,0.38) !important;
+    box-shadow: 0 16px 38px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.10) !important;
+    backdrop-filter: blur(6px) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.real-mobile.game-running .joy-base::before {
+    content: "▲\A◀   ▶\A▼" !important;
+    white-space: pre !important;
+    position: absolute !important;
+    inset: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    color: rgba(255,255,255,0.58) !important;
+    font: 900 22px/1.75 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    text-align: center !important;
+    background: none !important;
+    transform: none !important;
+    width: auto !important;
+    height: auto !important;
+    left: 0 !important;
+    top: 0 !important;
+  }
+
+  body.real-mobile.game-running .joy-base::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 2px !important;
+    height: 76% !important;
+    transform: translate(-50%, -50%) !important;
+    border-radius: 999px !important;
+    background: rgba(255,255,255,0.18) !important;
+    box-shadow: 0 0 0 999px transparent !important;
+  }
+
+  body.real-mobile.game-running .joy-knob {
+    display: block !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 62px !important;
+    height: 62px !important;
+    margin-left: -31px !important;
+    margin-top: -31px !important;
+    border-radius: 999px !important;
+    background: rgba(238, 245, 232, 0.90) !important;
+    border: 3px solid rgba(20, 28, 23, 0.75) !important;
+    box-shadow: 0 10px 26px rgba(0,0,0,0.55) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 2 !important;
+    will-change: transform !important;
+  }
+
+  body.real-mobile.game-running .fire-zone {
+    display: block !important;
+    position: fixed !important;
+    right: max(16px, env(safe-area-inset-right)) !important;
+    bottom: max(22px, env(safe-area-inset-bottom)) !important;
+    width: 108px !important;
+    height: 108px !important;
+    border-radius: 999px !important;
+    pointer-events: auto !important;
+    touch-action: none !important;
+    background: rgba(142, 58, 39, 0.92) !important;
+    color: #fff !important;
+    border: 2px solid rgba(255,255,255,0.32) !important;
+    box-shadow: 0 16px 38px rgba(0,0,0,0.55) !important;
+    font: 900 18px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.real-mobile.game-running .fire-zone.pressed,
+  body.real-mobile.game-running .fire-zone:active {
+    background: rgba(190, 74, 48, 0.98) !important;
+    transform: scale(0.96) !important;
+  }
+
+  @media (max-width: 430px) {
+    body.real-mobile.game-running .joy-zone {
+      width: 136px !important;
+      height: 136px !important;
+      left: max(10px, env(safe-area-inset-left)) !important;
+      bottom: max(10px, env(safe-area-inset-bottom)) !important;
     }
 
-    .touch-fire-wrap {
-      right: max(18px, env(safe-area-inset-right));
-      bottom: max(14px, env(safe-area-inset-bottom));
+    body.real-mobile.game-running .joy-knob {
+      width: 56px !important;
+      height: 56px !important;
+      margin-left: -28px !important;
+      margin-top: -28px !important;
     }
 
-    .touch-fire {
-      width: 86px;
-      height: 86px;
+    body.real-mobile.game-running .joy-base::before {
+      font-size: 20px !important;
+    }
+
+    body.real-mobile.game-running .fire-zone {
+      width: 96px !important;
+      height: 96px !important;
+      right: max(12px, env(safe-area-inset-right)) !important;
+      bottom: max(16px, env(safe-area-inset-bottom)) !important;
+      font-size: 16px !important;
+    }
+  }
+
+  @media (orientation: landscape) and (max-height: 520px) {
+    body.real-mobile.game-running .joy-zone {
+      width: 116px !important;
+      height: 116px !important;
+      left: max(14px, env(safe-area-inset-left)) !important;
+      bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    }
+
+    body.real-mobile.game-running .joy-knob {
+      width: 46px !important;
+      height: 46px !important;
+      margin-left: -23px !important;
+      margin-top: -23px !important;
+    }
+
+    body.real-mobile.game-running .joy-base::before {
+      font-size: 17px !important;
+    }
+
+    body.real-mobile.game-running .fire-zone {
+      width: 84px !important;
+      height: 84px !important;
+      right: max(18px, env(safe-area-inset-right)) !important;
+      bottom: max(12px, env(safe-area-inset-bottom)) !important;
+      font-size: 14px !important;
     }
   }
 
@@ -292,6 +618,16 @@
 
       <canvas id="game" width="960" height="760"></canvas>
 
+      <div class="touch-controls" id="touchControls" aria-label="Touch controls">
+        <div class="joy-zone" id="joyZone" aria-label="Move joystick">
+          <div class="joy-base">
+            <div class="joy-knob" id="joyKnob"></div>
+          </div>
+        </div>
+        <button class="fire-zone" id="touchFire" aria-label="Fire">FIRE</button>
+      </div>
+
+
       <div class="menu-overlay" id="menuOverlay">
         <div class="menu-box">
           <h2 id="menuTitle">Tank You!</h2>
@@ -312,6 +648,20 @@
 
 <script>
 (() => {
+  const isRealMobile =
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && Math.min(screen.width, screen.height) <= 900);
+
+  if (isRealMobile) {
+    document.body.classList.add('real-mobile');
+  }
+
+  // Mobile browser fallback: some WebViews report pointer weirdly.
+  if (!document.body.classList.contains('real-mobile')) {
+    const narrowTouch = window.innerWidth <= 900 && navigator.maxTouchPoints > 0;
+    if (narrowTouch) document.body.classList.add('real-mobile');
+  }
+
   const TILE = 40;
   const COLS = 24;
   const ROWS = 19;
@@ -368,6 +718,7 @@
     '########################'
   ];
 
+  const gameCard = document.querySelector('.game-card');
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
   const statusEl = document.getElementById('status');
@@ -419,38 +770,105 @@
     }
   });
 
-  function bindTouchHold(button, onPress, onRelease) {
-    if (!button) return;
+  function setupTouchJoystick() {
+    const joyZone = document.getElementById('joyZone');
+    const joyKnob = document.getElementById('joyKnob');
+    const fireButton = document.getElementById('touchFire');
+    if (!joyZone || !joyKnob || !fireButton || joyZone.dataset.ready === '1') return;
+    joyZone.dataset.ready = '1';
 
-    const press = e => {
-      e.preventDefault();
-      button.classList.add('pressed');
-      onPress();
-      try { button.setPointerCapture?.(e.pointerId); } catch {}
+    const resetJoy = () => {
+      input.up = false;
+      input.down = false;
+      input.left = false;
+      input.right = false;
+      joyZone.classList.remove('active');
+      joyKnob.style.transform = 'translate(0px, 0px)';
     };
 
-    const release = e => {
-      e.preventDefault();
-      button.classList.remove('pressed');
-      onRelease();
-      try { button.releasePointerCapture?.(e.pointerId); } catch {}
+    const updateJoy = (clientX, clientY) => {
+      const rect = joyZone.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      let dx = clientX - cx;
+      let dy = clientY - cy;
+      const max = rect.width * 0.30;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist > max) {
+        dx = dx / dist * max;
+        dy = dy / dist * max;
+      }
+
+      joyKnob.style.transform = `translate(${dx}px, ${dy}px)`;
+
+      input.up = false;
+      input.down = false;
+      input.left = false;
+      input.right = false;
+
+      const dead = rect.width * 0.11;
+      if (Math.hypot(dx, dy) < dead) return;
+
+      // Без диагоналей: выбираем главную ось, как в старых танчиках.
+      if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 0) input.right = true;
+        else input.left = true;
+      } else {
+        if (dy > 0) input.down = true;
+        else input.up = true;
+      }
     };
 
-    button.addEventListener('pointerdown', press);
-    button.addEventListener('pointerup', release);
-    button.addEventListener('pointercancel', release);
-    button.addEventListener('lostpointercapture', release);
-    button.addEventListener('contextmenu', e => e.preventDefault());
+    joyZone.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      joyZone.classList.add('active');
+      try { joyZone.setPointerCapture?.(e.pointerId); } catch {}
+      updateJoy(e.clientX, e.clientY);
+    }, { passive: false });
+
+    joyZone.addEventListener('pointermove', e => {
+      if (!joyZone.classList.contains('active')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      updateJoy(e.clientX, e.clientY);
+    }, { passive: false });
+
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => {
+      joyZone.addEventListener(type, e => {
+        e.preventDefault?.();
+        resetJoy();
+      }, { passive: false });
+    });
+
+    const fireOn = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      input.fire = true;
+      fireButton.classList.add('pressed');
+      try { fireButton.setPointerCapture?.(e.pointerId); } catch {}
+    };
+
+    const fireOff = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      input.fire = false;
+      fireButton.classList.remove('pressed');
+      try { fireButton.releasePointerCapture?.(e.pointerId); } catch {}
+    };
+
+    fireButton.addEventListener('pointerdown', fireOn, { passive: false });
+    fireButton.addEventListener('pointerup', fireOff, { passive: false });
+    fireButton.addEventListener('pointercancel', fireOff, { passive: false });
+    fireButton.addEventListener('lostpointercapture', fireOff);
+    fireButton.addEventListener('contextmenu', e => e.preventDefault());
+
+    document.getElementById('touchControls')?.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
   }
 
-  document.querySelectorAll('[data-touch-dir]').forEach(button => {
-    const dir = button.dataset.touchDir;
-    bindTouchHold(button, () => { input[dir] = true; }, () => { input[dir] = false; });
-  });
-
-  bindTouchHold(document.getElementById('touchFire'), () => { input.fire = true; }, () => { input.fire = false; });
-
-  document.getElementById('touchControls')?.addEventListener('touchmove', e => e.preventDefault(), { passive: false });
+  setupTouchJoystick();
+  document.addEventListener('DOMContentLoaded', setupTouchJoystick);
 
   document.getElementById('fullscreen').addEventListener('click', async () => {
     const card = document.querySelector('.game-card');
@@ -485,10 +903,16 @@
   function resetInput() {
     input.up = input.down = input.left = input.right = input.fire = false;
     fireLatch = false;
+    document.getElementById('joyZone')?.classList.remove('active');
+    const knob = document.getElementById('joyKnob');
+    if (knob) knob.style.transform = 'translate(0px, 0px)';
+    document.getElementById('touchFire')?.classList.remove('pressed');
   }
 
   function showMenu(mode, title, text) {
     gameState = mode;
+    gameCard?.classList.remove('touch-active');
+    document.body.classList.remove('game-running');
     menuTitle.textContent = title;
     menuText.textContent = text;
     menuOverlay.classList.remove('hidden');
@@ -500,6 +924,8 @@
 
   function hideMenu() {
     menuOverlay.classList.add('hidden');
+    gameCard?.classList.add('touch-active');
+    document.body.classList.add('game-running');
   }
 
   function updateRoundPills() {
@@ -674,14 +1100,31 @@
     return '';
   }
 
+  function collisionRadius(tank) {
+    // Визуально танк остаётся крупным, но хитбокс чуть мягче.
+    // Так танк меньше цепляется углами за стены и проходы ощущаются честнее.
+    return Math.max(9, tank.radius - (tank.type === 'heavy' ? 5 : 4));
+  }
+
   function canMoveTo(tank, nx, ny) {
-    const r = tank.radius;
-    const pts = [[nx-r,ny-r],[nx+r,ny-r],[nx-r,ny+r],[nx+r,ny+r],[nx,ny]];
+    const r = collisionRadius(tank);
+
+    // Проверяем не только углы, но и стороны. Углы при этом чуть скруглены
+    // за счёт уменьшенного collisionRadius.
+    const pts = [
+      [nx-r, ny-r], [nx+r, ny-r],
+      [nx-r, ny+r], [nx+r, ny+r],
+      [nx-r, ny], [nx+r, ny],
+      [nx, ny-r], [nx, ny+r],
+      [nx, ny]
+    ];
+
     if (!pts.every(([px,py]) => !solidAtPixel(px, py, false))) return false;
 
     for (const other of allTanks) {
       if (!other.alive || other === tank) continue;
-      if (Math.hypot(other.x - nx, other.y - ny) < tank.radius + other.radius + 2) return false;
+      const minDist = collisionRadius(tank) + collisionRadius(other) + 2;
+      if (Math.hypot(other.x - nx, other.y - ny) < minDist) return false;
     }
 
     return true;
@@ -735,8 +1178,15 @@
       const speed = player.speed * speedMultiplier(player);
       const nx = player.x + dx * speed * dt;
       const ny = player.y + dy * speed * dt;
-      if (canMoveTo(player, nx, player.y)) player.x = nx;
-      if (canMoveTo(player, player.x, ny)) player.y = ny;
+
+      // Strict movement: no auto-slide, no side nudge.
+      // If the selected axis is blocked, the tank simply stops.
+      if (dx !== 0 && dy === 0) {
+        if (canMoveTo(player, nx, player.y)) player.x = nx;
+      } else if (dy !== 0 && dx === 0) {
+        if (canMoveTo(player, player.x, ny)) player.y = ny;
+      }
+
       checkPowerupPickup(player);
     }
 
@@ -1437,23 +1887,5 @@
   requestAnimationFrame(frame);
 })();
 </script>
-
-  <div class="touch-controls" id="touchControls" aria-label="Touch controls">
-    <div class="touch-dpad">
-      <button class="touch-btn touch-empty" aria-hidden="true">·</button>
-      <button class="touch-btn" data-touch-dir="up" aria-label="Up">▲</button>
-      <button class="touch-btn touch-empty" aria-hidden="true">·</button>
-      <button class="touch-btn" data-touch-dir="left" aria-label="Left">◀</button>
-      <button class="touch-btn touch-empty" aria-hidden="true">·</button>
-      <button class="touch-btn" data-touch-dir="right" aria-label="Right">▶</button>
-      <button class="touch-btn touch-empty" aria-hidden="true">·</button>
-      <button class="touch-btn" data-touch-dir="down" aria-label="Down">▼</button>
-      <button class="touch-btn touch-empty" aria-hidden="true">·</button>
-    </div>
-    <div class="touch-fire-wrap">
-      <button class="touch-btn touch-fire" id="touchFire" aria-label="Fire">FIRE</button>
-    </div>
-  </div>
-
 </body>
 </html>
